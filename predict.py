@@ -41,8 +41,4 @@ def predict(image, model, topk=5):
         classes = [idx_to_class[idx] for idx in classes[0].tolist()]
     return probs, classes
         
-image = test_dir + '/1/image_06743.jpg'
-
-probs, classes = predict(image, model)
-print(probs)
-print(classes)
+predict(in_args.data_dir, model, 5)
