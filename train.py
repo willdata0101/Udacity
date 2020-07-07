@@ -10,6 +10,7 @@ from torch import nn
 from torch import optim
 import torch.nn.functional as F
 from torchvision import datasets, transforms, models
+import argparse
 
 data_dir = 'flowers'
 train_dir = data_dir + '/train'
@@ -196,3 +197,19 @@ checkpoint = {'input_size': 25088, 'output_size': 102, 'epochs': 5,
               'state_dict': model.state_dict()}
 
 torch.save(checkpoint, 'checkpoint.pth')
+
+### Args ###
+
+ap = argparse.ArgumentParser()
+
+ap.add_argument('--data_dir', '--d', type=str, dest='data_dir', help='path to folder of flower images')
+ap.add_argument('--save_dir', '--s', help='sets directory to save checkpoints')
+ap.add_argument('--arch', '--a', default='vgg11', help='choose architecture')
+ap.add_argument('--learning_rate', action='store', type=float, default='0.01', help='sets learning rate')
+ap.add_argument('--hidden_units', action='store', type=int, default='512', help='sets hidden units')
+ap.add_argument('--epochs', action='store', type=int, default='20', help='sets epochs')
+ap.add_argument('--gpu', action='store_true', help='use GPU for training')
+
+args = ap.parse_args()
+
+print(args)
