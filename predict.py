@@ -2,9 +2,20 @@ import torch
 from PIL import Image
 from torchvision import datasets, transforms, models
 from torch.autograd import Variable
-from train.py import model
+import argparse
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+def load_checkpoint(filepath):
+    checkpoint = torch.load(filepath)
+    model = models.vgg11(pretrained=True)
+    model.class_to_idx = checkpoint['class_to_idx']
+    model.classifier = checkpoint['classifier']
+    model.load_state_dict(checkpoint['state_dict'])
+    
+    return model
+
+model = load_checkpoint('checkpoint.pth')
 
 if torch.cuda.is_available():
     model.cuda()
@@ -20,8 +31,6 @@ def pil_loader(path):
     with open(path, 'rb') as f:
         with Image.open(f) as image:
             return image.convert('RGB')
-
-print(test_transforms(pil_loader(test_dir + "/1/image_06743.jpg")))
 
 def predict(image, model, topk=5):
     ''' Predict the class (or classes) of an image using a trained deep learning model.
@@ -40,5 +49,16 @@ def predict(image, model, topk=5):
         idx_to_class = {v:k for k,v in model.class_to_idx.items()}
         classes = [idx_to_class[idx] for idx in classes[0].tolist()]
     return probs, classes
-        
 
+### Args ###
+
+ap = argparse.ArgumentParser()
+
+ap.add_argument('--checkpoint', '--ckp', type=str, help='checkpoint filename')
+ap.add_argument('--topk', '--k', type=int, help='return top K most likely classes')
+ap.add_argument('--category_names', '--cat', type=str, help='use mapping of categories to real names')
+ap.add_argument('--gpu', type='str', help='use GPU for training')
+
+args = ap.parse_args()
+
+print(args)
