@@ -211,5 +211,3 @@ ap.add_argument('--epochs', action='store', type=int, default='20', help='sets e
 ap.add_argument('--gpu', action='store_true', help='use GPU for training')
 
 args = ap.parse_args()
-
-print(args)
