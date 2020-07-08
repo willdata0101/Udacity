@@ -54,11 +54,10 @@ def predict(image, model, topk=5):
 
 ap = argparse.ArgumentParser()
 
-ap.add_argument('--checkpoint', '--ckp', type=str, help='checkpoint filename')
-ap.add_argument('--topk', '--k', type=int, help='return top K most likely classes')
+ap.add_argument('--checkpoint', '--ckp', required=True, help='checkpoint filename')
+ap.add_argument('--topk', '--k', type=int, required=True, help='return top K most likely classes')
 ap.add_argument('--category_names', '--cat', type=str, help='use mapping of categories to real names')
-ap.add_argument('--gpu', type='str', help='use GPU for training')
+ap.add_argument('--gpu', type=str, help='use GPU for training')
+ap.add_argument('--image_path', type=str, required=True, help='path of image to be predicted')
 
 args = ap.parse_args()
-
-print(args)
