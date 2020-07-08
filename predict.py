@@ -17,6 +17,10 @@ def load_checkpoint(filepath):
 
 model = load_checkpoint('checkpoint.pth')
 
+data_dir = 'flowers'
+
+test_dir = data_dir + '/test'
+
 if torch.cuda.is_available():
     model.cuda()
 
@@ -61,3 +65,14 @@ ap.add_argument('--gpu', type=str, help='use GPU for training')
 ap.add_argument('--image_path', type=str, required=True, help='path of image to be predicted')
 
 args = ap.parse_args()
+
+image = test_dir + args.image_path
+
+topk = args.topk
+
+category_names = json.load(f)
+
+
+probs, classes = predict(image, model)
+print(probs)
+print(classes)
