@@ -202,7 +202,7 @@ torch.save(checkpoint, 'checkpoint.pth')
 
 ap = argparse.ArgumentParser()
 
-ap.add_argument('--data_dir', '--d', type=str, dest='data_dir', help='path to folder of flower images')
+ap.add_argument('--data_dir', '--d', type=str, default='flowers', help='path to folder of flower images')
 ap.add_argument('--save_dir', '--s', help='sets directory to save checkpoints')
 ap.add_argument('--arch', '--a', default='vgg11', help='choose architecture')
 ap.add_argument('--learning_rate', action='store', type=float, default='0.01', help='sets learning rate')
