@@ -4,6 +4,11 @@ from torchvision import datasets, transforms, models
 from torch.autograd import Variable
 import argparse
 
+import json
+
+with open('cat_to_name.json', 'r') as f:
+    cat_to_name = json.load(f)
+
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def load_checkpoint(filepath):
@@ -73,5 +78,12 @@ topk = args.topk
 cat = args.cat
 
 probs, classes = predict(image, model)
+
+cat = []
+
+for x in classes:
+    
+    cat.append(cat_to_name[x])
+
 print(probs)
-print(classes)
+print(cat)
